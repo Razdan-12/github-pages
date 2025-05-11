@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>GameCraft</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #ffffff, #000000);
+    color: #222;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    filter: grayscale(1);
+  }
+  header {
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    background: rgba(255 255 255 / 0.85);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-bottom: 1px solid #999;
+    user-select: none;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.8rem;
+    letter-spacing: 1.2px;
+    color: #000;
+    text-shadow:
+      1px 1px 0 #fff,
+      -1px -1px 0 #fff,
+      1px -1px 0 #fff,
+      -1px 1px 0 #fff;
+  }
+
+  main {
+    flex: 1;
+    width: 100%;
+    max-width: 360px;
+    padding: 1rem 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .game-card {
+    background: rgba(255 255 255 / 0.9);
+    border-radius: 14px;
+    box-shadow:
+      0 4px 15px rgba(0,0,0,0.1),
+      inset 0 0 12px 2px rgba(0 0 0 / 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px;
+    cursor: pointer;
+    transition:
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease,
+      background-color 0.3s ease;
+    user-select: none;
+    filter: none;
+  }
+  .game-card:hover, .game-card:focus {
+    background: #eee;
+    transform: translateY(-7px) scale(1.03);
+    box-shadow:
+      0 8px 24px rgba(0,0,0,0.25),
+      inset 0 0 15px 2px rgba(0 0 0 / 0.2);
+    outline: none;
+  }
+  .game-thumb {
+    width: 100%;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    background: white;
+  }
+  .game-title {
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    color: #111;
+    text-shadow:
+      0 0 3px rgba(255 255 255, 0.9);
+  }
+
+  footer {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 0;
+    font-size: 0.8rem;
+    color: rgba(0 0 0 / 0.5);
+    background: rgba(255 255 255 / 0.8);
+    border-top: 1px solid #bbb;
+    user-select: none;
+  }
+
+  /* Scrollbar styling */
+  main::-webkit-scrollbar {
+    width: 6px;
+  }
+  main::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  main::-webkit-scrollbar-thumb {
+    background: rgba(0 0 0 / 0.15);
+    border-radius: 3px;
+  }
+
+  @media (max-width: 350px) {
+    main {
+      max-width: 100vw;
+    }
+    .game-card {
+      padding: 12px;
+    }
+    .game-thumb {
+      height: 80px;
+    }
+    header h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>🎮GameCraft</h1>
+  </header>
+  <main>
+    <div class="games-grid" role="list" aria-label="Available games">
+      <!-- Game cards will be inserted here by JS -->
+    </div>
+  </main>
+  <footer>© 2024 GameCraft</footer>
+
+<script>
+  const games = [
+    {
+      title: "2048",
+      url: "https://play2048.co/",
+      thumbnail: "https://upload.wikimedia.org/wikipedia/commons/5/56/2048_game_logo.svg"
+    },
+    {
+      title: "Slither.io",
+      url: "http://slither.io/",
+      thumbnail: "https://cdn.sstatic.net/Sites/slither/img/favicon.ico"
+    },
+    {
+      title: "Agar.io",
+      url: "https://agar.io/",
+      thumbnail: "https://static.agar.io/favicon.ico"
+    },
+    {
+      title: "Fireboy and Watergirl",
+      url: "https://www.crazygames.com/game/fireboy-and-watergirl-1",
+      thumbnail: "https://www.crazygames.com/icons/330-3306074_fireboy-and-watergirl-1-icon.png"
+    },
+    {
+      title: "Cut The Rope",
+      url: "https://cuttherope.net/play/",
+      thumbnail: "https://cuttherope.net/sites/default/files/ctri-icon.png"
+    },
+    {
+      title: "Pacman",
+      url: "https://www.google.com/logos/2010/pacman10-i.html",
+      thumbnail: "https://www.google.com/logos/2010/pacman10-i.gif"
+    },
+    {
+      title: "Tetris",
+      url: "https://tetris.com/play-tetris",
+      thumbnail: "https://tetris.com/sites/default/files/favicon.ico"
+    },
+    {
+      title: "Chrome Dino",
+      url: "chrome://dino",
+      thumbnail: "https://upload.wikimedia.org/wikipedia/commons/4/4a/Chrome_Dinosaur_Icon.svg"
+    },
+  ];
+
+  function createGameCard(game) {
+    const card = document.createElement("a");
+    card.className = "game-card";
+    card.href = game.url;
+    card.target = "_blank";
+    card.rel = "noopener noreferrer";
+    card.role = "listitem";
+    card.tabIndex = 0;
+    card.title = `Open ${game.title}`;
+
+    const img = document.createElement("img");
+    img.className = "game-thumb";
+    img.alt = `${game.title} thumbnail`;
+    img.src = game.thumbnail;
+    img.loading = "lazy";
+
+    const title = document.createElement("div");
+    title.className = "game-title";
+    title.textContent = game.title;
+
+    card.appendChild(img);
+    card.appendChild(title);
+
+    return card;
+  }
+
+  function loadGames() {
+    const grid = document.querySelector(".games-grid");
+    games.forEach(game => {
+      const card = createGameCard(game);
+      grid.appendChild(card);
+    });
+  }
+
+  loadGames();
+</script>
+</body>
+</html>
